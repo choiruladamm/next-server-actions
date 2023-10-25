@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React, { FormEvent } from "react";
+import { revalidateTag } from "next/cache";
+import React from "react";
 
 export interface Product {
   id?: number;
@@ -13,13 +14,16 @@ export default async function Home() {
 
   const res = await fetch(urlMockAPi, {
     cache: "no-cache",
+    next: {
+      tags: ["produts"],
+    },
   });
 
   const products: Product[] = await res.json();
 
   const addProductToDatabase = async (e: FormData) => {
-    'use server'
-    
+    "use server";
+
     const product = e.get("product")?.toString();
     const price = e.get("price")?.toString();
 
@@ -37,6 +41,8 @@ export default async function Home() {
         "Content-Type": "application/json",
       },
     });
+
+    revalidateTag("products");
   };
 
   return (
