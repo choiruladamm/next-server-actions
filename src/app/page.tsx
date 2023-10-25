@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Product } from "@/types/product";
 import { addProductToDatabase } from "@/actions/serverAction";
+import AddProductButton from "@/components/AddProductButton";
 
 export default async function Home() {
   const res = await fetch(
@@ -20,6 +21,8 @@ export default async function Home() {
   return (
     <main className="my-6 max-w-4xl mx-auto">
       <h1 className="text-center text-3xl font-bold">Products Warehouse</h1>
+
+      <AddProductButton>Add Macbook Pro</AddProductButton>
 
       <form
         action={addProductToDatabase}
