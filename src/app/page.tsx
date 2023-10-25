@@ -1,49 +1,21 @@
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { revalidateTag } from "next/cache";
-import React from "react";
-
-export interface Product {
-  id?: number;
-  product: string;
-  price: string;
-}
+import { Product } from "./types/product";
+import { addProductToDatabase } from "./actions/serverAction";
 
 export default async function Home() {
-  const urlMockAPi = "https://653918f7e3b530c8d9e7e7b1.mockapi.io/products";
-
-  const res = await fetch(urlMockAPi, {
-    cache: "no-cache",
-    next: {
-      tags: ["produts"],
-    },
-  });
+  const res = await fetch(
+    "https://653918f7e3b530c8d9e7e7b1.mockapi.io/products",
+    {
+      cache: "no-cache",
+      next: {
+        tags: ["produts"],
+      },
+    }
+  );
 
   const products: Product[] = await res.json();
-
-  const addProductToDatabase = async (e: FormData) => {
-    "use server";
-
-    const product = e.get("product")?.toString();
-    const price = e.get("price")?.toString();
-
-    if (!product || !price) return;
-
-    const newProduct: Product = {
-      product,
-      price,
-    };
-
-    await fetch(urlMockAPi, {
-      method: "POST",
-      body: JSON.stringify(newProduct),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    revalidateTag("products");
-  };
 
   return (
     <main className="my-6 max-w-4xl mx-auto">
