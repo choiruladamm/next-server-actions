@@ -1,7 +1,7 @@
 "use server";
 
+import { Product } from "@/types/product";
 import { revalidateTag } from "next/cache";
-import { Product } from "../types/product";
 
 export const addProductToDatabase = async (e: FormData) => {
   const product = e.get("product")?.toString();

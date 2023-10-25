@@ -1,8 +1,8 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Product } from "./types/product";
-import { addProductToDatabase } from "./actions/serverAction";
+import { Product } from "@/types/product";
+import { addProductToDatabase } from "@/actions/serverAction";
 
 export default async function Home() {
   const res = await fetch(
